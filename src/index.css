@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+body {
+    background-color: #f3f7f4;
+    font-family: 'Nunito', sans-serif;
+    color: #2d3748;
+    overflow-x: hidden;
+}
+h1, h2, h3, h4, .font-fun { font-family: 'Fredoka', sans-serif; }
+
+#privacy-gate {
+    background-color: #f0fdf4;
+    background-image: radial-gradient(#dbfdec 1.5px, transparent 0);
+    background-size: 16px 16px;
+}
+
+.page-sheet {
+    background-color: #fdfbf7;
+    border-radius: 28px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    position: relative;
+    overflow: hidden;
+    border: 10px solid #f3ece0;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 950px;
+}
+
+.line-input {
+    border-bottom: 2px dashed #cbd5e1;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    padding: 4px 8px;
+    color: #1e3a8a;
+    font-weight: bold;
+}
+
+.drawing-canvas {
+    cursor: crosshair;
+    touch-action: none;
+    background-color: #ffffff;
+}
+
+.parchment-bg {
+    background-color: #fcf8f0;
+    border: 2px solid #e2d4be;
+}
+
+/* --- ESTILOS DE IMPRESIÓN PRO (A4 EXACTO SIN SUPERPOSICIONES) --- */
+@media print {
+    @page { size: A4 portrait; margin: 0; }
+    html, body { 
+        background: white !important; 
+        width: 210mm; 
+        height: 297mm; 
+        margin: 0; 
+        padding: 0;
+    }
+    .no-print { display: none !important; }
+    #notebook-container { margin: 0 !important; width: 100% !important; }
+    
+    .page-sheet {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 12mm !important;
+        width: 210mm !important;
+        height: 297mm !important;
+        page-break-after: always !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        background-color: white !important;
+        overflow: hidden !important;
+    }
+
+    .page-sheet.hidden { display: flex !important; }
+
+    /* Re-maquetación de cuadrículas para impresión */
+    .grid-cols-2 { grid-template-columns: 1fr 1fr !important; }
+    
+    /* Escalar imágenes y marcos polaroid para liberar espacio */
+    .polaroid-container { 
+        transform: scale(0.75) !important; 
+        margin-top: -15px !important; 
+        margin-bottom: -15px !important; 
+        transform-origin: center !important;
+    }
+    
+    /* Ajustar cajas de texto e itinerarios */
+    .itinerary-box { font-size: 10px !important; line-height: 1.15; }
+    .kids-missions { font-size: 11px !important; }
+    
+    /* Sección de dibujo empujada al final y escalada */
+    .drawing-section { 
+        margin-top: auto !important; 
+        padding-top: 6px !important;
+        border-width: 2px !important;
+    }
+    
+    canvas { 
+        border: 1px dashed #bbb !important; 
+        height: 85px !important; 
+    }
+    
+    .canvas-label { font-size: 9px !important; }
+    img { max-height: 140px !important; object-fit: contain !important; }
+}
