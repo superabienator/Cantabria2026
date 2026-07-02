@@ -991,11 +991,11 @@
         };
 
         
-        const SECRET_PASSWORD = "oso"; 
+        const SECRET_PASSWORD = "oso26"; 
 
         function checkLogin() {
             const pwd = document.getElementById('login-password').value.trim().toLowerCase();
-            if (pwd === SECRET_PASSWORD || pwd === "1234" || pwd === "explorador") {
+            if (pwd === SECRET_PASSWORD) {
                 localStorage.setItem('cantabria_logged_in', 'true');
                 const overlay = document.getElementById('login-overlay');
                 overlay.style.opacity = '0';
