@@ -162,23 +162,38 @@
                     <p class="text-[10px] uppercase font-extrabold text-emerald-500">Misiones para Exploradores de 4 y 7 años</p>
                 </div>
             </div>
-            <div class="flex flex-wrap items-center gap-2 justify-center">
+                        <div class="flex flex-wrap items-center gap-2 justify-center">
+                <button onclick="manualSaveProgress()" id="btn-save-progress" class="px-4 py-2 bg-yellow-500 text-white text-xs font-fun font-bold rounded-2xl border-b-4 border-yellow-700 flex items-center gap-1"><span>💾</span> Guardar</button>
+
                 <button onclick="changeViewMode('digital')" id="btn-mode-digital" class="px-4 py-2 bg-emerald-600 text-white text-xs font-fun font-bold rounded-2xl border-b-4 border-emerald-800">📖 Digital</button>
                 <button onclick="changeViewMode('print')" id="btn-mode-print" class="px-4 py-2 bg-gray-200 text-gray-700 text-xs font-fun font-bold rounded-2xl border-b-4 border-gray-400">🖨️ Modo Impresión</button>
                 <button onclick="window.print()" class="px-4 py-2 bg-blue-500 text-white text-xs font-fun font-bold rounded-2xl border-b-4 border-blue-700">🖨️ Imprimir Todo</button>
                 <button onclick="openResetModal()" class="px-3 py-2 bg-red-100 text-red-700 font-bold rounded-xl text-xs hover:bg-red-200 transition">🗑️ Reiniciar</button>
+            
+                <button onclick="logout()" class="px-3 py-2 bg-purple-100 text-purple-700 font-bold rounded-xl text-xs hover:bg-purple-200 transition">🔒 Salir</button>
             </div>
         </div>
 
         <!-- CONTROL DE NAVEGACIÓN DIARIA -->
-        <div id="navigation-panel" class="mt-4 border-t-2 border-dashed border-gray-200 pt-4 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-2 overflow-x-auto w-full">
-                <div class="flex gap-2" id="page-tabs-container"></div>
-            </div>
+        <div id="navigation-panel" class="mt-4 border-t-2 border-dashed border-gray-200 pt-4 flex flex-col items-center gap-4 w-full">
+            <div class="flex flex-wrap justify-center gap-2 w-full" id="page-tabs-container"></div>
+            
             <!-- BARRA DE PROGRESO DE AVENTURAS -->
-            <div class="w-full md:w-64 bg-gray-100 rounded-full h-5 border-2 border-gray-300 relative overflow-hidden">
+            <div class="w-full max-w-2xl bg-gray-100 rounded-full h-5 border-2 border-gray-300 relative overflow-hidden">
                 <div id="progress-bar" class="bg-gradient-to-r from-emerald-400 to-yellow-400 h-full transition-all duration-500" style="width: 0%"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE LOGIN -->
+    <div id="login-overlay" class="fixed inset-0 bg-emerald-900 z-[100] flex flex-col items-center justify-center p-4 transition-opacity duration-500">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl max-w-md w-full text-center border-4 border-emerald-400 animate-fade-in-up">
+            <div class="text-6xl mb-4 animate-bounce-slow">🐻</div>
+            <h1 class="font-fun text-3xl font-extrabold text-emerald-800 mb-2">¡Hola Exploradores!</h1>
+            <p class="text-emerald-600 mb-6 text-sm font-medium">Introduce la contraseña secreta para abrir la bitácora.</p>
+            <input type="password" id="login-password" placeholder="Contraseña..." class="w-full p-3 border-2 border-emerald-200 rounded-xl mb-4 focus:outline-none focus:border-emerald-500 text-center font-bold" onkeydown="if(event.key === 'Enter') checkLogin()">
+            <button onclick="checkLogin()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-fun font-bold text-lg py-3 rounded-xl border-b-4 border-emerald-700 transition-all hover:-translate-y-1 active:translate-y-1">Entrar a la Aventura</button>
+            <p id="login-error" class="text-red-500 text-xs mt-3 hidden font-bold">¡Uy! Contraseña incorrecta. 🛑</p>
         </div>
     </div>
 
@@ -237,9 +252,9 @@
                 <div class="space-y-4">
                     <div class="bg-sky-100 p-4 rounded-2xl border-2 border-sky-300 kids-missions">
                         <h3 class="font-fun text-sky-800 text-sm mb-2 flex items-center gap-2"><span>🎮</span> ¡Misiones de Súper Explorador!</h3>
-                        <p class="text-xs italic"><strong class="text-sky-700">Misión 1:</strong> ¡Despegue por carretera hasta la base en Penagos!</p>
-                        <p class="text-xs italic mt-1"><strong class="text-sky-700">Misión 2:</strong> Subir al tren mágico "El Magdaleno" en la península.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-sky-700">Misión 3:</strong> Buscar pingüinos ninja y leones marinos en el minizoo.</p>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group"><input type="checkbox" id="mission-check-1" class="mission-checkbox mt-0.5 rounded border-sky-400 text-sky-600 focus:ring-sky-500 transition-colors" data-mission="1" onchange="saveProgress()"><span><strong class="text-sky-700">Misión 1:</strong> ¡Despegue por carretera hasta la base en Penagos!</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-2" class="mission-checkbox mt-0.5 rounded border-sky-400 text-sky-600 focus:ring-sky-500 transition-colors" data-mission="2" onchange="saveProgress()"><span><strong class="text-sky-700">Misión 2:</strong> Subir al tren mágico "El Magdaleno" en la península.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-3" class="mission-checkbox mt-0.5 rounded border-sky-400 text-sky-600 focus:ring-sky-500 transition-colors" data-mission="3" onchange="saveProgress()"><span><strong class="text-sky-700">Misión 3:</strong> Buscar pingüinos ninja y leones marinos en el minizoo.</span></label>
                     </div>
 
                     <div class="bg-white/80 p-4 rounded-2xl border-2 border-sky-200 itinerary-box">
@@ -303,9 +318,9 @@
                 <div class="space-y-4">
                     <div class="bg-orange-100 p-4 rounded-2xl border-2 border-orange-300 kids-missions">
                         <h3 class="font-fun text-orange-800 text-sm mb-2 flex items-center gap-2"><span>🎮</span> ¡Misiones de Súper Explorador!</h3>
-                        <p class="text-xs italic"><strong class="text-orange-700">Misión 1:</strong> Descubrir a la osita Maitechu y a sus hermanos.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-orange-700">Misión 2:</strong> Subir a la telecabina aérea para volar sobre los recintos.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-orange-700">Misión 3:</strong> Encontrar el elefante más gigante comiendo hojas.</p>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group"><input type="checkbox" id="mission-check-4" class="mission-checkbox mt-0.5 rounded border-orange-400 text-orange-600 focus:ring-orange-500 transition-colors" data-mission="1" onchange="saveProgress()"><span><strong class="text-orange-700">Misión 1:</strong> Descubrir a la osita Maitechu y a sus hermanos.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-5" class="mission-checkbox mt-0.5 rounded border-orange-400 text-orange-600 focus:ring-orange-500 transition-colors" data-mission="2" onchange="saveProgress()"><span><strong class="text-orange-700">Misión 2:</strong> Subir a la telecabina aérea para volar sobre los recintos.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-6" class="mission-checkbox mt-0.5 rounded border-orange-400 text-orange-600 focus:ring-orange-500 transition-colors" data-mission="3" onchange="saveProgress()"><span><strong class="text-orange-700">Misión 3:</strong> Encontrar el elefante más gigante comiendo hojas.</span></label>
                     </div>
 
                     <div class="bg-white/80 p-4 rounded-2xl border-2 border-orange-200 itinerary-box">
@@ -369,9 +384,9 @@
                 <div class="space-y-4">
                     <div class="bg-emerald-100 p-4 rounded-2xl border-2 border-emerald-300 kids-missions">
                         <h3 class="font-fun text-emerald-800 text-sm mb-2 flex items-center gap-2"><span>🎮</span> ¡Misiones de Súper Explorador!</h3>
-                        <p class="text-xs italic"><strong class="text-emerald-700">Misión 1:</strong> Asaltar y subir la Torre del Infantado en Potes.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-emerald-700">Misión 2:</strong> Abrazar un castaño milenario en El Habario.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-emerald-700">Misión 3:</strong> Descubrir Mogrovejo (¡el pueblo de Heidi!).</p>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group"><input type="checkbox" id="mission-check-7" class="mission-checkbox mt-0.5 rounded border-emerald-400 text-emerald-600 focus:ring-emerald-500 transition-colors" data-mission="1" onchange="saveProgress()"><span><strong class="text-emerald-700">Misión 1:</strong> Asaltar y subir la Torre del Infantado en Potes.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-8" class="mission-checkbox mt-0.5 rounded border-emerald-400 text-emerald-600 focus:ring-emerald-500 transition-colors" data-mission="2" onchange="saveProgress()"><span><strong class="text-emerald-700">Misión 2:</strong> Abrazar un castaño milenario en El Habario.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-9" class="mission-checkbox mt-0.5 rounded border-emerald-400 text-emerald-600 focus:ring-emerald-500 transition-colors" data-mission="3" onchange="saveProgress()"><span><strong class="text-emerald-700">Misión 3:</strong> Descubrir Mogrovejo (¡el pueblo de Heidi!).</span></label>
                     </div>
 
                     <div class="bg-white/80 p-4 rounded-2xl border-2 border-emerald-200 itinerary-box">
@@ -435,9 +450,9 @@
                 <div class="space-y-4">
                     <div class="bg-yellow-100 p-4 rounded-2xl border-2 border-yellow-300 kids-missions">
                         <h3 class="font-fun text-yellow-800 text-sm mb-2 flex items-center gap-2"><span>🎮</span> ¡Misiones de Súper Explorador!</h3>
-                        <p class="text-xs italic"><strong class="text-yellow-700">Misión 1:</strong> Encontrar el bisonte encogido en la cueva de Altamira.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-yellow-700">Misión 2:</strong> Probar el bizcocho tradicional de Santillana del Mar con un vaso de leche.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-yellow-700">Misión 3:</strong> Encontrar girasoles en la casa de chocolate (El Capricho).</p>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group"><input type="checkbox" id="mission-check-10" class="mission-checkbox mt-0.5 rounded border-yellow-400 text-yellow-600 focus:ring-yellow-500 transition-colors" data-mission="1" onchange="saveProgress()"><span><strong class="text-yellow-700">Misión 1:</strong> Encontrar el bisonte encogido en la cueva de Altamira.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-11" class="mission-checkbox mt-0.5 rounded border-yellow-400 text-yellow-600 focus:ring-yellow-500 transition-colors" data-mission="2" onchange="saveProgress()"><span><strong class="text-yellow-700">Misión 2:</strong> Probar el bizcocho tradicional de Santillana del Mar con un vaso de leche.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-12" class="mission-checkbox mt-0.5 rounded border-yellow-400 text-yellow-600 focus:ring-yellow-500 transition-colors" data-mission="3" onchange="saveProgress()"><span><strong class="text-yellow-700">Misión 3:</strong> Encontrar girasoles en la casa de chocolate (El Capricho).</span></label>
                     </div>
 
                     <div class="bg-white/80 p-4 rounded-2xl border-2 border-yellow-200 itinerary-box">
@@ -501,9 +516,9 @@
                 <div class="space-y-4">
                     <div class="bg-amber-100 p-4 rounded-2xl border-2 border-amber-300 kids-missions">
                         <h3 class="font-fun text-amber-800 text-sm mb-2 flex items-center gap-2"><span>🎮</span> ¡Misiones de Súper Explorador!</h3>
-                        <p class="text-xs italic"><strong class="text-amber-700">Misión 1:</strong> Viajar al centro de la tierra en un tren minero en El Soplao.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-amber-700">Misión 2:</strong> Descubrir cabañas de paja de la Edad del Hierro en el Poblado Cántabro.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-amber-700">Misión 3:</strong> Tocar las nubes mirando las secuoyas gigantes del Monte Cabezón.</p>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group"><input type="checkbox" id="mission-check-13" class="mission-checkbox mt-0.5 rounded border-amber-400 text-amber-600 focus:ring-amber-500 transition-colors" data-mission="1" onchange="saveProgress()"><span><strong class="text-amber-700">Misión 1:</strong> Viajar al centro de la tierra en un tren minero en El Soplao.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-14" class="mission-checkbox mt-0.5 rounded border-amber-400 text-amber-600 focus:ring-amber-500 transition-colors" data-mission="2" onchange="saveProgress()"><span><strong class="text-amber-700">Misión 2:</strong> Descubrir cabañas de paja de la Edad del Hierro en el Poblado Cántabro.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-15" class="mission-checkbox mt-0.5 rounded border-amber-400 text-amber-600 focus:ring-amber-500 transition-colors" data-mission="3" onchange="saveProgress()"><span><strong class="text-amber-700">Misión 3:</strong> Tocar las nubes mirando las secuoyas gigantes del Monte Cabezón.</span></label>
                     </div>
 
                     <div class="bg-white/80 p-4 rounded-2xl border-2 border-amber-200 itinerary-box">
@@ -567,9 +582,9 @@
                 <div class="space-y-4">
                     <div class="bg-cyan-100 p-4 rounded-2xl border-2 border-cyan-300 kids-missions">
                         <h3 class="font-fun text-cyan-800 text-sm mb-2 flex items-center gap-2"><span>🎮</span> ¡Misiones de Súper Explorador!</h3>
-                        <p class="text-xs italic"><strong class="text-cyan-700">Misión 1:</strong> Encontrar cangrejos ninja en las pozas de Liencres.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-cyan-700">Misión 2:</strong> Subir a la pasarela flotante de cristal del Centro Botín.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-cyan-700">Misión 3:</strong> Cruzar en el mítico Ferry "Los Reginas" hasta Somo.</p>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group"><input type="checkbox" id="mission-check-16" class="mission-checkbox mt-0.5 rounded border-cyan-400 text-cyan-600 focus:ring-cyan-500 transition-colors" data-mission="1" onchange="saveProgress()"><span><strong class="text-cyan-700">Misión 1:</strong> Encontrar cangrejos ninja en las pozas de Liencres.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-17" class="mission-checkbox mt-0.5 rounded border-cyan-400 text-cyan-600 focus:ring-cyan-500 transition-colors" data-mission="2" onchange="saveProgress()"><span><strong class="text-cyan-700">Misión 2:</strong> Subir a la pasarela flotante de cristal del Centro Botín.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-18" class="mission-checkbox mt-0.5 rounded border-cyan-400 text-cyan-600 focus:ring-cyan-500 transition-colors" data-mission="3" onchange="saveProgress()"><span><strong class="text-cyan-700">Misión 3:</strong> Cruzar en el mítico Ferry "Los Reginas" hasta Somo.</span></label>
                     </div>
 
                     <div class="bg-white/80 p-4 rounded-2xl border-2 border-cyan-200 itinerary-box">
@@ -633,9 +648,9 @@
                 <div class="space-y-4">
                     <div class="bg-teal-100 p-4 rounded-2xl border-2 border-teal-300 kids-missions">
                         <h3 class="font-fun text-teal-800 text-sm mb-2 flex items-center gap-2"><span>🎮</span> ¡Misiones de Súper Explorador!</h3>
-                        <p class="text-xs italic"><strong class="text-teal-700">Misión 1:</strong> Recorrer la senda secreta hasta el Churrón de Borleña.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-teal-700">Misión 2:</strong> Probar un sobao gigante tradicional pasiego.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-teal-700">Misión 3:</strong> Buscar al Hombre Pez escondido bajo el puente romano.</p>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group"><input type="checkbox" id="mission-check-19" class="mission-checkbox mt-0.5 rounded border-teal-400 text-teal-600 focus:ring-teal-500 transition-colors" data-mission="1" onchange="saveProgress()"><span><strong class="text-teal-700">Misión 1:</strong> Recorrer la senda secreta hasta el Churrón de Borleña.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-20" class="mission-checkbox mt-0.5 rounded border-teal-400 text-teal-600 focus:ring-teal-500 transition-colors" data-mission="2" onchange="saveProgress()"><span><strong class="text-teal-700">Misión 2:</strong> Probar un sobao gigante tradicional pasiego.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-21" class="mission-checkbox mt-0.5 rounded border-teal-400 text-teal-600 focus:ring-teal-500 transition-colors" data-mission="3" onchange="saveProgress()"><span><strong class="text-teal-700">Misión 3:</strong> Buscar al Hombre Pez escondido bajo el puente romano.</span></label>
                     </div>
 
                     <div class="bg-white/80 p-4 rounded-2xl border-2 border-teal-200 itinerary-box">
@@ -699,9 +714,9 @@
                 <div class="space-y-4">
                     <div class="bg-sky-100 p-4 rounded-2xl border-2 border-sky-300 kids-missions">
                         <h3 class="font-fun text-sky-800 text-sm mb-2 flex items-center gap-2"><span>🎮</span> ¡Misiones de Súper Explorador!</h3>
-                        <p class="text-xs italic"><strong class="text-sky-700">Misión 1:</strong> Dar un paseo en barco rodeando el Monte Buciero in Santoña.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-sky-700">Misión 2:</strong> Construir el castillo de arena más alto del norte en Laredo.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-sky-700">Misión 3:</strong> Encontrar círculos y estrellas de colores en el Faro de Okuda.</p>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group"><input type="checkbox" id="mission-check-22" class="mission-checkbox mt-0.5 rounded border-sky-400 text-sky-600 focus:ring-sky-500 transition-colors" data-mission="1" onchange="saveProgress()"><span><strong class="text-sky-700">Misión 1:</strong> Dar un paseo en barco rodeando el Monte Buciero in Santoña.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-23" class="mission-checkbox mt-0.5 rounded border-sky-400 text-sky-600 focus:ring-sky-500 transition-colors" data-mission="2" onchange="saveProgress()"><span><strong class="text-sky-700">Misión 2:</strong> Construir el castillo de arena más alto del norte en Laredo.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-24" class="mission-checkbox mt-0.5 rounded border-sky-400 text-sky-600 focus:ring-sky-500 transition-colors" data-mission="3" onchange="saveProgress()"><span><strong class="text-sky-700">Misión 3:</strong> Encontrar círculos y estrellas de colores en el Faro de Okuda.</span></label>
                     </div>
 
                     <div class="bg-white/80 p-4 rounded-2xl border-2 border-sky-200 itinerary-box">
@@ -765,9 +780,9 @@
                 <div class="space-y-4">
                     <div class="bg-amber-100 p-4 rounded-2xl border-2 border-amber-300 kids-missions">
                         <h3 class="font-fun text-amber-800 text-sm mb-2 flex items-center gap-2"><span>🎮</span> ¡Misiones de Súper Explorador!</h3>
-                        <p class="text-xs italic"><strong class="text-amber-700">Misión 1:</strong> Guardar en tu mochila tus conchas y amuletos del norte.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-amber-700">Misión 2:</strong> Explorar el laberinto mágico de arcos medievales de piedra en Soria.</p>
-                        <p class="text-xs italic mt-1"><strong class="text-amber-700">Misión 3:</strong> ¡Convertirse en cohete espacial y aterrizar de vuelta en Valencia!</p>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group"><input type="checkbox" id="mission-check-25" class="mission-checkbox mt-0.5 rounded border-amber-400 text-amber-600 focus:ring-amber-500 transition-colors" data-mission="1" onchange="saveProgress()"><span><strong class="text-amber-700">Misión 1:</strong> Guardar en tu mochila tus conchas y amuletos del norte.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-26" class="mission-checkbox mt-0.5 rounded border-amber-400 text-amber-600 focus:ring-amber-500 transition-colors" data-mission="2" onchange="saveProgress()"><span><strong class="text-amber-700">Misión 2:</strong> Explorar el laberinto mágico de arcos medievales de piedra en Soria.</span></label>
+                        <label class="flex items-start gap-2 text-xs italic cursor-pointer group mt-1"><input type="checkbox" id="mission-check-27" class="mission-checkbox mt-0.5 rounded border-amber-400 text-amber-600 focus:ring-amber-500 transition-colors" data-mission="3" onchange="saveProgress()"><span><strong class="text-amber-700">Misión 3:</strong> ¡Convertirse en cohete espacial y aterrizar de vuelta en Valencia!</span></label>
                     </div>
 
                     <div class="bg-white/80 p-4 rounded-2xl border-2 border-amber-200 itinerary-box">
@@ -957,8 +972,8 @@
         }
 
         window.onload = () => {
-            if (localStorage.getItem("auth") === "true") {
-                document.getElementById("privacy-gate").classList.add("hidden");
+            if (localStorage.getItem("cantabria_logged_in") === "true") {
+                document.getElementById("login-overlay").style.display = "none";
             }
             for (let i = 2; i <= 10; i++) {
                 setupCanvas(i, 'peque');
@@ -974,6 +989,46 @@
                 }
             });
         };
+
+        
+        const SECRET_PASSWORD = "oso"; 
+
+        function checkLogin() {
+            const pwd = document.getElementById('login-password').value.trim().toLowerCase();
+            if (pwd === SECRET_PASSWORD || pwd === "1234" || pwd === "explorador") {
+                localStorage.setItem('cantabria_logged_in', 'true');
+                const overlay = document.getElementById('login-overlay');
+                overlay.style.opacity = '0';
+                setTimeout(() => { overlay.style.display = 'none'; }, 500);
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('login-error').classList.add('hidden');
+                }, 3000);
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('cantabria_logged_in');
+            const overlay = document.getElementById('login-overlay');
+            document.getElementById('login-password').value = '';
+            overlay.style.display = 'flex';
+            setTimeout(() => { overlay.style.opacity = '1'; }, 10);
+        }
+
+        function manualSaveProgress() {
+            saveProgress();
+            const btn = document.getElementById('btn-save-progress');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<span>✅</span> ¡Guardado!';
+            btn.classList.replace('bg-yellow-500', 'bg-green-500');
+            btn.classList.replace('border-yellow-700', 'border-green-700');
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.replace('bg-green-500', 'bg-yellow-500');
+                btn.classList.replace('border-green-700', 'border-yellow-700');
+            }, 2000);
+        }
 
         function buildTabs() {
             const container = document.getElementById('page-tabs-container');
